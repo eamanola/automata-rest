@@ -24,7 +24,7 @@ const restRouter = (controller, {
 
     try {
       const { body, user } = req;
-      const created = await create(user.id, body);
+      const created = await create(user?.id, body);
 
       res.status(201).json({ message: 'CREATED', [resultKey]: created });
     } catch (err) {
@@ -39,7 +39,7 @@ const restRouter = (controller, {
 
     try {
       const { params, user } = req;
-      const result = await byId(user.id, { id: params.id });
+      const result = await byId(user?.id, { id: params.id });
 
       res.status(200).json({ message: 'OK', [resultKey]: result });
     } catch (err) {
@@ -54,7 +54,7 @@ const restRouter = (controller, {
 
     try {
       const { user } = req;
-      const results = await byOwner(user.id);
+      const results = await byOwner(user?.id);
 
       res.status(200).json({ message: 'OK', [resultsKey]: results });
     } catch (err) {
@@ -69,10 +69,10 @@ const restRouter = (controller, {
 
     try {
       const { user, body, params } = req;
-      await update(user.id, body);
+      await update(user?.id, body);
 
       const { id } = params;
-      const updated = await byId(user.id, { id });
+      const updated = await byId(user?.id, { id });
 
       res.status(200).json({ message: 'OK', [resultKey]: updated });
     } catch (err) {
@@ -88,7 +88,7 @@ const restRouter = (controller, {
     try {
       const { user, params } = req;
       const { id } = params;
-      await remove(user.id, { id });
+      await remove(user?.id, { id });
 
       res.status(200).json({ message: 'OK' });
     } catch (err) {

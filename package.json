@@ -1,6 +1,6 @@
 {
   "name": "automata-rest",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "rest api helper",
   "main": "src/index.js",
   "scripts": {
