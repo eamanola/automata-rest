@@ -292,12 +292,10 @@ describe('rest controller', () => {
       const created = await byIdUnAuth(null, { id });
       expect(created).toEqual(expect.objectContaining(resource));
 
-      try {
-        await byOwnerUnAuth(null);
-        expect('no owner').toBe(true);
-      } catch (err) {
-        expect(err).toBeTruthy();
-      }
+      expect((await byOwnerUnAuth(null)).length).toBe(await count(table.name));
+      const { id: secondId } = await createUnAuth(null, resource);
+      expect((await byOwnerUnAuth(null)).length).toBe(await count(table.name));
+      await removeUnAuth(null, { id: secondId });
 
       const modified = { ...created, foo: 'baz' };
       expect(modified.foo).not.toBe(created.foo);
