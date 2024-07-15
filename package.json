@@ -1,13 +1,13 @@
 {
   "name": "automata-rest",
-  "version": "0.0.18",
+  "version": "0.0.20",
   "description": "rest api helper",
   "main": "dist/index.bundle.js",
   "files": [
     "./dist/index.bundle.js"
   ],
   "scripts": {
-    "test": "AUTOMATA_SQLITE_FILE=:memory: SECRET=shhhh jest",
+    "test": "SECRET=shhhh jest",
     "lint": "eslint .",
     "build": "webpack",
     "prepack": "npm run build"
