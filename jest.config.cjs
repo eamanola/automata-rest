@@ -1,5 +1,3 @@
-const {defaults} = require('jest-config');
-
 module.exports = {
   setupFiles: [
     './jest/jest.setup.config.js',

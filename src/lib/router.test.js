@@ -4,7 +4,7 @@ const { deleteAll, dropTable } = require('automata-db');
 const { router: users } = require('automata-user-management');
 const { errors } = require('automata-utils');
 
-const { getToken, deleteUsers } = require('../../jest/test-helpers.test');
+const { getToken } = require('../../jest/test-helpers.test');
 
 const restRouter = require('./router');
 
@@ -45,7 +45,6 @@ describe('rest router', () => {
 
   afterEach(async () => {
     await deleteAll(table.name);
-    await deleteUsers();
   });
 
   it('should throw accessDenied, if user missing', async () => {
@@ -58,7 +57,7 @@ describe('rest router', () => {
 
   describe('POST /', () => {
     it('should create one', async () => {
-      const { token } = await getToken();
+      const { token } = await getToken(api);
       const resource = { foo: 'bar' };
 
       const { body, status } = await api
@@ -76,7 +75,7 @@ describe('rest router', () => {
 
     it('should throw paramError, on invalid params', async () => {
       const { paramError } = errors;
-      const { token } = await getToken();
+      const { token } = await getToken(api);
       const invalid = { bar: 1 };
 
       const { body, status } = await api
@@ -91,7 +90,7 @@ describe('rest router', () => {
 
   describe('GET /:id', () => {
     it('should return a result by id', async () => {
-      const { token } = await getToken();
+      const { token } = await getToken(api);
       const resource = await create({ token });
 
       const { body, status } = await api
@@ -108,8 +107,8 @@ describe('rest router', () => {
 
   describe('GET /', () => {
     it('should return all user resources', async () => {
-      const { token } = await getToken();
-      const { token: token2 } = await getToken({ email: 'foo2@other.com' });
+      const { token } = await getToken(api);
+      const { token: token2 } = await getToken(api, { email: 'foo2@other.com' });
 
       await create({ token });
       await create({ token });
@@ -124,7 +123,7 @@ describe('rest router', () => {
 
   describe('PUT /:id', () => {
     it('should update one', async () => {
-      const { token } = await getToken();
+      const { token } = await getToken(api);
       const inserted = await create({ token });
 
       const changed = { ...inserted, foo: 'foo1' };
@@ -148,7 +147,7 @@ describe('rest router', () => {
 
     it('should throw paramError, on invalid params', async () => {
       const { paramError } = errors;
-      const { token } = await getToken();
+      const { token } = await getToken(api);
       const inserted = await create({ token });
 
       const invalid = { ...inserted, foo: '' };
@@ -167,7 +166,7 @@ describe('rest router', () => {
     });
 
     it('should not update owner, or modified', async () => {
-      const { token } = await getToken();
+      const { token } = await getToken(api);
       const inserted = await create({ token });
 
       const modified = { ...inserted, modified: 'bar', owner: 'foo' };
@@ -185,7 +184,7 @@ describe('rest router', () => {
     });
 
     it('should not update id', async () => {
-      const { token } = await getToken();
+      const { token } = await getToken(api);
       const inserted = await create({ token });
 
       const modified = { ...inserted, id: `ABCDE${inserted.id.substring(5)}` };
@@ -206,7 +205,7 @@ describe('rest router', () => {
 
   describe('DELETE /:id', () => {
     it('should remove by id', async () => {
-      const { token } = await getToken();
+      const { token } = await getToken(api);
       const resource = await create({ token });
 
       const { body, status } = await api
