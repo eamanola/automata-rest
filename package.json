@@ -1,6 +1,6 @@
 {
   "name": "automata-rest",
-  "version": "0.0.26",
+  "version": "0.0.27",
   "description": "rest api helper",
   "main": "dist/index.bundle.js",
   "files": [
@@ -11,7 +11,7 @@
     "lint": "eslint .",
     "build": "webpack",
     "prepack": "npm run build",
-    "prepare": "npm run build"
+    "prepare": "husky || true"
   },
   "repository": {
     "type": "git",

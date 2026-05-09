@@ -1,0 +1,7 @@
+allowBuilds:
+  automata-user-management: true
+  bcrypt: true
+  better-sqlite3: true
+  unrs-resolver: true
+
+blockExoticSubdeps: false
