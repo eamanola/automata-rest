@@ -12,7 +12,6 @@ const {
 } = require('automata-db');
 
 const { NODE_ENV } = require('../../config');
-
 const restTable = require('./rest-table');
 const getValidator = require('./get-validator');
 

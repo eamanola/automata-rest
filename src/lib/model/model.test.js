@@ -1,5 +1,4 @@
 const { string, object } = require('yup');
-
 const { count, deleteAll, dropTable } = require('automata-db');
 
 const restModel = require('.');
@@ -244,7 +243,11 @@ describe('rest-model', () => {
 
   describe('reserved fields', () => {
     it('insert should throw, if reserved field used as columns', () => {
-      ['id', 'modified', 'owner'].forEach((reserved) => {
+      [
+        'id',
+        'modified',
+        'owner',
+      ].forEach((reserved) => {
         try {
           restModel({ ...table, columns: [{ name: reserved, type: 'string' }] });
           expect('unreachable').toBe(true);

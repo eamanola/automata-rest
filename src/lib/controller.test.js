@@ -1,7 +1,6 @@
 const { count, deleteAll, dropTable } = require('automata-db');
 
 const restController = require('./controller');
-
 const restModel = require('./model');
 
 const columns = [{ name: 'foo', required: true, type: 'string' }];

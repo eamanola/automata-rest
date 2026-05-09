@@ -12,16 +12,18 @@ const onFinish = (req, res, callback) => {
 
   res.json = (body) => {
     // Accepted pitfall: may lead to unsync, if same request done before cache server updates
-    old.call(res, body); // continue request forward
+    // continue request forward
+    old.call(res, body);
 
-    callback(req, res, body); // do cache in parallel
+    // do cache in parallel
+    callback(req, res, body);
   };
 };
 
-const cacheResult = async ( // req, res, body
-  { user, originalUrl },
-  { statusCode },
-  body,
+const cacheResult = async (
+  { user, originalUrl }, /* req */
+  { statusCode }, /* res */
+  body, /* body */
 ) => {
   if (statusCode === 200) {
     const key = cacheKey({ url: originalUrl, user });
@@ -34,9 +36,9 @@ const cacheResult = async ( // req, res, body
   }
 };
 
-const invalidateCache = async ( // req, res
-  { user, originalUrl, baseUrl },
-  { statusCode },
+const invalidateCache = async (
+  { user, originalUrl, baseUrl }, /* req */
+  { statusCode }, /* res */
 ) => {
   if (statusCode === 200 || statusCode === 201) {
     try {
@@ -52,7 +54,7 @@ const invalidateCache = async ( // req, res
   }
 };
 
-const fromCache = async ({ user, originalUrl }) => { // req
+const fromCache = async ({ user, originalUrl }) => { /* req */
   const key = cacheKey({ url: originalUrl, user });
   const cached = await getItem(key);
 
@@ -75,7 +77,12 @@ const cache = async (req, res, next) => {
       } else {
         onFinish(req, res, cacheResult);
       }
-    } else if (['POST', 'PUT', 'DELETE'].includes(method)) {
+    } else if (
+      [
+        'POST',
+        'PUT',
+        'DELETE',
+      ].includes(method)) {
       onFinish(req, res, invalidateCache);
     }
   } catch (err) {

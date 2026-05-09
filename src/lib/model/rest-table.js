@@ -12,10 +12,7 @@ const getColumns = ({ columns: baseColumns }, userRequired) => {
 };
 
 const getIndexes = ({ indexes: baseIndexes = [], name: tableName }, userRequired) => {
-  const indexes = [
-    ...baseIndexes,
-    { columns: ['id'], name: `idx-${tableName}-id`, unique: true },
-  ];
+  const indexes = [...baseIndexes, { columns: ['id'], name: `idx-${tableName}-id`, unique: true }];
   if (userRequired) {
     indexes.push({ columns: ['owner'], name: `idx-${tableName}-owner` });
     indexes.push({ columns: ['id', 'owner'], name: `idx-${tableName}-id-owner`, unique: true });
@@ -25,7 +22,11 @@ const getIndexes = ({ indexes: baseIndexes = [], name: tableName }, userRequired
 };
 
 const restTable = (table, { userRequired }) => {
-  const reserved = ['id', 'owner', 'modified'];
+  const reserved = [
+    'id',
+    'owner',
+    'modified',
+  ];
   if (table.columns.some(({ name }) => reserved.includes(name))) {
     throw Error(`${reserved.join(', ')} are reserved column names`);
   }

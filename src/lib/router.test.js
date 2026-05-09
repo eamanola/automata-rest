@@ -5,7 +5,6 @@ const { router: users } = require('automata-user-management');
 const { errors } = require('automata-utils');
 
 const { getToken } = require('../../jest/test-helpers.test');
-
 const restRouter = require('./router');
 
 const columns = [{ name: 'foo', required: true, type: 'string' }];

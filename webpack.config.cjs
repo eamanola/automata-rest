@@ -27,8 +27,8 @@ const aModule = {
 const plugins = [];
 
 const optimization = {
-  minimizer: [new TerserPlugin()],
   minimize: true,
+  minimizer: [new TerserPlugin()],
 };
 
 const resolve = {};
