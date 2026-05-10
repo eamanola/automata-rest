@@ -1,5 +1,9 @@
 allowBuilds:
   automata-user-management: true
+  automata-cache: true
+  automata-db: true
+  automata-utils: true
+
   bcrypt: true
   better-sqlite3: true
   unrs-resolver: true

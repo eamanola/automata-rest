@@ -1,6 +1,6 @@
 {
   "name": "automata-rest",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "rest api helper",
   "main": "dist/index.bundle.js",
   "type": "commonjs",
