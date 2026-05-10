@@ -1,14 +1,14 @@
 {
   "name": "automata-rest",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "rest api helper",
   "main": "dist/index.bundle.js",
   "type": "commonjs",
   "files": [
-    "./dist/index.bundle.js"
+    "dist/index.bundle.js"
   ],
   "scripts": {
-    "test": "SECRET=shhhh jest",
+    "test": "jest",
     "lint": "eslint .",
     "build": "webpack",
     "prepack": "npm run build",
@@ -40,7 +40,7 @@
     "eslint-stylistic-airbnb": "^3.1.0",
     "globals": "^17.6.0",
     "husky": "^9.1.7",
-    "jest": "^30.4.1",
+    "jest": "^30.4.2",
     "supertest": "^7.2.2",
     "terser-webpack-plugin": "^5.6.0",
     "webpack": "^5.106.2",

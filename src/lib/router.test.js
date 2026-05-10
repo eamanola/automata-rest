@@ -37,9 +37,13 @@ describe('rest router', () => {
   beforeAll(async () => {
     db = global.client;
 
+    const SECRET = `shhh ${Math.random()}`;
+    // Not needed, but doesn hurt
+    const EMAIL_VERIFICATION_SECRET = `sshh ${Math.random()}`;
+
     const app = express();
     app.use(express.json());
-    app.use(users({ db }));
+    app.use(users({ db, EMAIL_VERIFICATION_SECRET, SECRET }));
     app.use(baseUrl, restRouter(null, { db, table }));
 
     api = supertest(app);
