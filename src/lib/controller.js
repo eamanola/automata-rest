@@ -8,11 +8,13 @@ const restModel = require('./model');
 
 const restController = (
   model,
-  { table, userRequired = true, validator } = {},
+  {
+    db, table, userRequired = true, validator,
+  } = {},
 ) => {
   const {
     deleteOne, findOne, find, insertOne, replaceOne,
-  } = model || restModel(table, { userRequired, validator });
+  } = model || restModel(db, table, { userRequired, validator });
 
   const addOwner = (userId, obj) => {
     if (userRequired) {

@@ -7,22 +7,26 @@ const columns = [{ name: 'foo', required: true, type: 'string' }];
 
 const table = { columns, name: 'test' };
 
-const {
-  create, byId, byOwner, update, remove,
-} = restController(null, { table });
+let db;
+let controller;
 
 const createResource = async (userId) => {
   const resource = { foo: 'bar' };
-  return create(userId, resource);
+  return controller.create(userId, resource);
 };
 
 describe('rest controller', () => {
+  beforeAll(async () => {
+    db = global.client;
+    controller = restController(null, { db, table });
+  });
+
   afterAll(async () => {
-    await dropTable(table.name);
+    await dropTable(db, table.name);
   });
 
   afterEach(async () => {
-    await deleteAll(table.name);
+    await deleteAll(db, table.name);
   });
 
   describe('userRequired', () => {
@@ -30,35 +34,35 @@ describe('rest controller', () => {
       const resource = { foo: 'bar' };
 
       try {
-        await create(null, resource);
+        await controller.create(null, resource);
         expect('Unreachable').toBe(true);
       } catch ({ message }) {
         expect(/Owner is required/u.test(message)).toBe(true);
       }
 
       try {
-        await byId(null, resource);
+        await controller.byId(null, resource);
         expect('Unreachable').toBe(true);
       } catch ({ message }) {
         expect(/Owner is required/u.test(message)).toBe(true);
       }
 
       try {
-        await byOwner(null);
+        await controller.byOwner(null);
         expect('Unreachable').toBe(true);
       } catch ({ message }) {
         expect(/Owner is required/u.test(message)).toBe(true);
       }
 
       try {
-        await update(null, { ...resource, baz: 'asd' });
+        await controller.update(null, { ...resource, baz: 'asd' });
         expect('Unreachable').toBe(true);
       } catch ({ message }) {
         expect(/Owner is required/u.test(message)).toBe(true);
       }
 
       try {
-        await remove(null, resource);
+        await controller.remove(null, resource);
         expect('Unreachable').toBe(true);
       } catch ({ message }) {
         expect(/Owner is required/u.test(message)).toBe(true);
@@ -71,11 +75,11 @@ describe('rest controller', () => {
       const userId = 'foo';
       const resource = { foo: 'bar' };
 
-      expect(await count(table.name)).toBe(0);
+      expect(await count(db, table.name)).toBe(0);
 
-      await create(userId, resource);
+      await controller.create(userId, resource);
 
-      expect(await count(table.name)).toBe(1);
+      expect(await count(db, table.name)).toBe(1);
     });
 
     it('should override owner', async () => {
@@ -84,18 +88,18 @@ describe('rest controller', () => {
 
       const fakeOwner = '1234';
 
-      const created = await create(userId, { ...resource, owner: fakeOwner });
+      const created = await controller.create(userId, { ...resource, owner: fakeOwner });
 
-      expect((await byOwner(userId))[0]).toEqual(created);
-      expect((await byOwner({ id: fakeOwner }))).toEqual([]);
+      expect((await controller.byOwner(userId))[0]).toEqual(created);
+      expect((await controller.byOwner({ id: fakeOwner }))).toEqual([]);
     });
 
     it('should return created', async () => {
       const userId = 'foo';
       const resource = { foo: 'bar' };
 
-      const created = await create(userId, resource);
-      expect(created).toEqual(await byId(userId, { id: created.id }));
+      const created = await controller.create(userId, resource);
+      expect(created).toEqual(await controller.byId(userId, { id: created.id }));
     });
   });
 
@@ -105,7 +109,7 @@ describe('rest controller', () => {
       const resource = await createResource(userId);
       const { id } = resource;
 
-      const resourceById = await byId(userId, { id });
+      const resourceById = await controller.byId(userId, { id });
 
       expect(resourceById).toEqual(resource);
     });
@@ -116,15 +120,15 @@ describe('rest controller', () => {
 
       const { id } = await createResource(userId);
 
-      expect(await byId(userId, { id })).toBeTruthy();
-      expect(await byId(userId2, { id })).toBeFalsy();
+      expect(await controller.byId(userId, { id })).toBeTruthy();
+      expect(await controller.byId(userId2, { id })).toBeFalsy();
     });
 
     it('should not return owner', async () => {
       const userId = 'foo';
       const resource = await createResource(userId);
 
-      const result = await byId(userId, { id: resource.id });
+      const result = await controller.byId(userId, { id: resource.id });
 
       expect(result.owner).toBeFalsy();
     });
@@ -141,7 +145,7 @@ describe('rest controller', () => {
       }
       await Promise.all(promises);
 
-      const results = await byOwner(userId);
+      const results = await controller.byOwner(userId);
       expect(results.length).toBe(TIMES);
     });
 
@@ -152,17 +156,17 @@ describe('rest controller', () => {
       const userId2 = 'bar';
       await createResource(userId2);
 
-      expect(await count(table.name)).toBe(2);
+      expect(await count(db, table.name)).toBe(2);
 
-      expect((await byOwner(userId)).length).toBe(1);
-      expect((await byOwner(userId2)).length).toBe(1);
+      expect((await controller.byOwner(userId)).length).toBe(1);
+      expect((await controller.byOwner(userId2)).length).toBe(1);
     });
 
     it('should not return owner', async () => {
       const userId = 'foo';
       const resource = await createResource(userId);
 
-      const results = await byOwner(userId);
+      const results = await controller.byOwner(userId);
       expect(results[0]).toEqual(resource);
       expect(results[0].owner).toBeFalsy();
     });
@@ -177,9 +181,9 @@ describe('rest controller', () => {
       const foo = 'text2';
       expect(foo).not.toBe(resource.foo);
 
-      await update(userId, { ...resource, foo });
+      await controller.update(userId, { ...resource, foo });
 
-      const updated = await byId(userId, { id });
+      const updated = await controller.byId(userId, { id });
 
       expect(updated).toEqual(expect.objectContaining({ foo }));
     });
@@ -191,10 +195,10 @@ describe('rest controller', () => {
       const fakeOwner = 'foo';
       expect(fakeOwner).not.toBe(resource.owner);
 
-      await update(userId, { ...resource, owner: fakeOwner });
+      await controller.update(userId, { ...resource, owner: fakeOwner });
 
-      expect((await byOwner(userId)).length).toBe(1);
-      expect((await byOwner({ id: fakeOwner })).length).toBe(0);
+      expect((await controller.byOwner(userId)).length).toBe(1);
+      expect((await controller.byOwner({ id: fakeOwner })).length).toBe(0);
     });
 
     it('should not update modified', async () => {
@@ -205,9 +209,9 @@ describe('rest controller', () => {
       const modified = 'foo';
       expect(modified).not.toBe(resource.modified);
 
-      await update(userId, { ...resource, modified });
+      await controller.update(userId, { ...resource, modified });
 
-      const updated = await byId(userId, { id });
+      const updated = await controller.byId(userId, { id });
       expect(updated.modified).not.toBe(modified);
     });
 
@@ -219,10 +223,10 @@ describe('rest controller', () => {
       const fakeId = `ABCDE${id.substring(5)}`;
       expect(fakeId).not.toBe(resource.id);
 
-      await update(userId, { ...resource, id: fakeId });
+      await controller.update(userId, { ...resource, id: fakeId });
 
-      expect(await byId(userId, { id })).toBeTruthy();
-      expect(await byId(userId, { id: fakeId })).toBeFalsy();
+      expect(await controller.byId(userId, { id })).toBeTruthy();
+      expect(await controller.byId(userId, { id: fakeId })).toBeFalsy();
     });
 
     it('should not update resources of other users', async () => {
@@ -235,9 +239,9 @@ describe('rest controller', () => {
 
       const userId2 = 'bar';
 
-      await update(userId2, { ...resource, foo });
+      await controller.update(userId2, { ...resource, foo });
 
-      expect(await byId(userId, { id })).toEqual(resource);
+      expect(await controller.byId(userId, { id })).toEqual(resource);
     });
   });
 
@@ -246,30 +250,30 @@ describe('rest controller', () => {
       const userId = 'foo';
       const { id } = await createResource(userId);
 
-      expect((await byOwner(userId)).length).toBe(1);
+      expect((await controller.byOwner(userId)).length).toBe(1);
 
-      await remove(userId, { id });
+      await controller.remove(userId, { id });
 
-      expect((await byOwner(userId)).length).toBe(0);
+      expect((await controller.byOwner(userId)).length).toBe(0);
     });
 
     it('should not remove resources of other users', async () => {
       const userId = 'foo';
       const { id } = await createResource(userId);
 
-      expect((await byOwner(userId)).length).toBe(1);
+      expect((await controller.byOwner(userId)).length).toBe(1);
 
       const userId2 = 'bar';
-      await remove(userId2, { id });
+      await controller.remove(userId2, { id });
 
-      expect((await byOwner(userId)).length).toBe(1);
+      expect((await controller.byOwner(userId)).length).toBe(1);
     });
   });
 
   describe('require user', () => {
     it('should support un auth access', async () => {
-      await dropTable(table.name);
-      const model = restModel(table, { userRequired: false });
+      await dropTable(db, table.name);
+      const model = restModel(db, table, { userRequired: false });
       await model.init();
 
       const {
@@ -283,14 +287,14 @@ describe('rest controller', () => {
       const resource = { foo: 'bar' };
 
       const { id } = await createUnAuth(null, resource);
-      expect(await count(table.name)).toBe(1);
+      expect(await count(db, table.name)).toBe(1);
 
       const created = await byIdUnAuth(null, { id });
       expect(created).toEqual(expect.objectContaining(resource));
 
-      expect((await byOwnerUnAuth(null)).length).toBe(await count(table.name));
+      expect((await byOwnerUnAuth(null)).length).toBe(await count(db, table.name));
       const { id: secondId } = await createUnAuth(null, resource);
-      expect((await byOwnerUnAuth(null)).length).toBe(await count(table.name));
+      expect((await byOwnerUnAuth(null)).length).toBe(await count(db, table.name));
       await removeUnAuth(null, { id: secondId });
 
       const modified = { ...created, foo: 'baz' };
@@ -302,7 +306,7 @@ describe('rest controller', () => {
       expect(updated.foo).toBe(modified.foo);
 
       await removeUnAuth(null, { id });
-      expect(await count(table.name)).toBe(0);
+      expect(await count(db, table.name)).toBe(0);
     });
   });
 });

@@ -15,14 +15,16 @@ const { NODE_ENV } = require('../../config');
 const restTable = require('./rest-table');
 const getValidator = require('./get-validator');
 
-const restModel = (table, { userRequired = true, validator = null } = {}) => {
+const restModel = (db, table, { userRequired = true, validator = null } = {}) => {
+  const client = db;
+
   const rTable = restTable(table, { userRequired });
   const { name: tableName, columns } = rTable;
 
   let shape;
   const init = async () => {
     shape = await getValidator(rTable, { userRequired, validator });
-    await dbCreateTable(rTable);
+    await dbCreateTable(client, rTable);
   };
   init();
 
@@ -31,15 +33,18 @@ const restModel = (table, { userRequired = true, validator = null } = {}) => {
 
     await shape.validate(row);
 
-    await dbInsertOne(tableName, toDB(row));
+    await dbInsertOne(client, tableName, toDB(row));
 
     return row;
   };
 
-  const findOne = async (where) => fromDB(await dbFindOne(tableName, toDB(where)), columns);
+  const findOne = async (where) => (
+    fromDB(await dbFindOne(client, tableName, toDB(where)), columns)
+  );
 
-  const find = async (where, options) => (await dbFind(tableName, toDB(where), options) || [])
-    .map((row) => fromDB(row, columns));
+  const find = async (where, options) => (
+    await dbFind(client, tableName, toDB(where), options) || []
+  ).map((row) => fromDB(row, columns));
 
   const replaceOne = async (where, replacement) => {
     if (!where.id) {
@@ -49,10 +54,11 @@ const restModel = (table, { userRequired = true, validator = null } = {}) => {
     const newRow = { ...replacement, modified: new Date() };
     await shape.validate(newRow);
 
-    return dbReplaceOne(tableName, toDB(where), toDB(newRow));
+    return dbReplaceOne(client, tableName, toDB(where), toDB(newRow));
   };
 
-  const deleteOne = ({ id, ...where }) => !!id && dbDeleteOne(tableName, toDB({ ...where, id }));
+  const deleteOne = ({ id, ...where }) => !!id
+    && dbDeleteOne(client, tableName, toDB({ ...where, id }));
 
   return {
     deleteOne,

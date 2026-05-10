@@ -12,12 +12,21 @@ const restRouter = (controller, {
   resultKey = 'result',
   resultsKey = 'results',
 
+  db,
   table,
   validator,
 } = {}) => {
   const {
     create, byId, byOwner, update, remove,
-  } = controller || restController(null, { table, userRequired, validator });
+  } = controller || restController(
+    null,
+    {
+      db,
+      table,
+      userRequired,
+      validator,
+    },
+  );
 
   const post = async (req, res, next) => {
     let error = null;

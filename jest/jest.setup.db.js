@@ -1,10 +1,9 @@
-const { initDB, connectDB, closeDB } = require('automata-db');
+const { connectDB, closeDB } = require('automata-db');
 
 beforeAll(async () => {
-  await initDB(':memory:');
-  await connectDB();
+  global.client = await connectDB(':memory:');
 });
 
 afterAll(async () => {
-  await closeDB();
+  await closeDB(global.client);
 });

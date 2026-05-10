@@ -11,16 +11,10 @@ const columns = [{ name: 'foo', required: true, type: 'string' }];
 
 const table = { columns, name: 'test' };
 
-const router = restRouter(null, { table });
+let db;
+let api;
 
 const baseUrl = '/test';
-
-const app = express();
-app.use(express.json());
-app.use(users);
-app.use(baseUrl, router);
-
-const api = supertest(app);
 
 const getById = async (id, token) => {
   const { body } = await api
@@ -40,10 +34,21 @@ const create = async ({ token, resource = { foo: 'bar' } }) => {
 };
 
 describe('rest router', () => {
-  afterAll(() => dropTable(table.name));
+  beforeAll(async () => {
+    db = global.client;
+
+    const app = express();
+    app.use(express.json());
+    app.use(users({ db }));
+    app.use(baseUrl, restRouter(null, { db, table }));
+
+    api = supertest(app);
+  });
+
+  afterAll(() => dropTable(db, table.name));
 
   afterEach(async () => {
-    await deleteAll(table.name);
+    await deleteAll(db, table.name);
   });
 
   it('should throw accessDenied, if user missing', async () => {
