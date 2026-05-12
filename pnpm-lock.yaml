@@ -10,10 +10,10 @@ importers:
     dependencies:
       automata-cache:
         specifier: github:eamanola/automata-cache
-        version: https://codeload.github.com/eamanola/automata-cache/tar.gz/17044177f61dc0cfee06c60adc5e56ada523fc2a
+        version: https://codeload.github.com/eamanola/automata-cache/tar.gz/92f3e8934ff1196ba265f2012f1e48bdf8855ba6
       automata-db:
         specifier: github:eamanola/automata-db
-        version: git+https://git@github.com:eamanola/automata-db.git#acf4b47cc19b7dbde9ee615b00c9f58095be2b8d
+        version: git+https://git@github.com:eamanola/automata-db.git#910ff1967fd0f27444bd19256045ab6ac9687abe
       automata-utils:
         specifier: github:eamanola/automata-utils
         version: git+https://git@github.com:eamanola/automata-utils.git#5632caceabde51451bae400352435b884b64121f
@@ -49,8 +49,8 @@ importers:
         specifier: ^4.16.2
         version: 4.16.2(eslint@10.3.0)
       eslint-stylistic-airbnb:
-        specifier: ^3.1.0
-        version: 3.1.0(@stylistic/eslint-plugin@5.10.0(eslint@10.3.0))(eslint-plugin-import-x@4.16.2(eslint@10.3.0))(eslint@10.3.0)
+        specifier: ^3.1.1
+        version: 3.1.1(@stylistic/eslint-plugin@5.10.0(eslint@10.3.0))(eslint-plugin-import-x@4.16.2(eslint@10.3.0))(eslint@10.3.0)
       globals:
         specifier: ^17.6.0
         version: 17.6.0
@@ -1217,13 +1217,13 @@ packages:
   asynckit@0.4.0:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
 
-  automata-cache@https://codeload.github.com/eamanola/automata-cache/tar.gz/17044177f61dc0cfee06c60adc5e56ada523fc2a:
-    resolution: {gitHosted: true, tarball: https://codeload.github.com/eamanola/automata-cache/tar.gz/17044177f61dc0cfee06c60adc5e56ada523fc2a}
-    version: 0.0.7
+  automata-cache@https://codeload.github.com/eamanola/automata-cache/tar.gz/92f3e8934ff1196ba265f2012f1e48bdf8855ba6:
+    resolution: {gitHosted: true, tarball: https://codeload.github.com/eamanola/automata-cache/tar.gz/92f3e8934ff1196ba265f2012f1e48bdf8855ba6}
+    version: 0.0.12
 
-  automata-db@git+https://git@github.com:eamanola/automata-db.git#acf4b47cc19b7dbde9ee615b00c9f58095be2b8d:
-    resolution: {commit: acf4b47cc19b7dbde9ee615b00c9f58095be2b8d, repo: git@github.com:eamanola/automata-db.git, type: git}
-    version: 0.1.3
+  automata-db@git+https://git@github.com:eamanola/automata-db.git#910ff1967fd0f27444bd19256045ab6ac9687abe:
+    resolution: {commit: 910ff1967fd0f27444bd19256045ab6ac9687abe, repo: git@github.com:eamanola/automata-db.git, type: git}
+    version: 0.1.5
 
   automata-user-management@git+https://git@github.com:eamanola/automata-user-management.git#c0fe7f616493cd654c078861ad88cdeb0fa00ed5:
     resolution: {commit: c0fe7f616493cd654c078861ad88cdeb0fa00ed5, repo: git@github.com:eamanola/automata-user-management.git, type: git}
@@ -1646,8 +1646,8 @@ packages:
     resolution: {integrity: sha512-xS90H51cKw0jltxmvmHy2Iai1LIqrfbw57b79w/J7MfvDfkIkFZ+kj6zC3BjtUwh150HsSSdxXZcsuv72miDFQ==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
-  eslint-stylistic-airbnb@3.1.0:
-    resolution: {integrity: sha512-DlZRJWkRTfvomOhALkeGEEHvkEQ8AaLHvLzbFYHSm+5fG/r9iCmomDpUuUpzHAaTv0zYLKpTnKMmLH6YdTTWAg==}
+  eslint-stylistic-airbnb@3.1.1:
+    resolution: {integrity: sha512-KKJo0kjlbAERbSn98uD0mo02jFK09RD9d5zwNtLklDhc0upd6Qnuq2Qc6Egd7oWb8mB4IRPT9fgN7WiH/4p4Uw==}
     peerDependencies:
       '@stylistic/eslint-plugin': '>=2.0.0'
       eslint: '>=8.57.0'
@@ -4411,7 +4411,7 @@ snapshots:
 
   asynckit@0.4.0: {}
 
-  automata-cache@https://codeload.github.com/eamanola/automata-cache/tar.gz/17044177f61dc0cfee06c60adc5e56ada523fc2a:
+  automata-cache@https://codeload.github.com/eamanola/automata-cache/tar.gz/92f3e8934ff1196ba265f2012f1e48bdf8855ba6:
     dependencies:
       dotenv: 17.4.2
       redis: 5.12.1
@@ -4419,7 +4419,7 @@ snapshots:
       - '@node-rs/xxhash'
       - '@opentelemetry/api'
 
-  automata-db@git+https://git@github.com:eamanola/automata-db.git#acf4b47cc19b7dbde9ee615b00c9f58095be2b8d:
+  automata-db@git+https://git@github.com:eamanola/automata-db.git#910ff1967fd0f27444bd19256045ab6ac9687abe:
     dependencies:
       better-sqlite3: 12.9.0
       dotenv: 17.4.2
@@ -4436,7 +4436,7 @@ snapshots:
 
   automata-user-management@git+https://git@github.com:eamanola/automata-user-management.git#c0fe7f616493cd654c078861ad88cdeb0fa00ed5:
     dependencies:
-      automata-db: git+https://git@github.com:eamanola/automata-db.git#acf4b47cc19b7dbde9ee615b00c9f58095be2b8d
+      automata-db: git+https://git@github.com:eamanola/automata-db.git#910ff1967fd0f27444bd19256045ab6ac9687abe
       automata-utils: git+https://git@github.com:eamanola/automata-utils.git#5632caceabde51451bae400352435b884b64121f
       bcrypt: 6.0.0
       dotenv: 17.4.2
@@ -4847,7 +4847,7 @@ snapshots:
       esrecurse: 4.3.0
       estraverse: 5.3.0
 
-  eslint-stylistic-airbnb@3.1.0(@stylistic/eslint-plugin@5.10.0(eslint@10.3.0))(eslint-plugin-import-x@4.16.2(eslint@10.3.0))(eslint@10.3.0):
+  eslint-stylistic-airbnb@3.1.1(@stylistic/eslint-plugin@5.10.0(eslint@10.3.0))(eslint-plugin-import-x@4.16.2(eslint@10.3.0))(eslint@10.3.0):
     dependencies:
       '@stylistic/eslint-plugin': 5.10.0(eslint@10.3.0)
       confusing-browser-globals: 1.0.11
