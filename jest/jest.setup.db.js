@@ -1,4 +1,6 @@
-global.db = require('automata-db')('sqlite');
+const { drivers } = require('automata-db');
+
+global.db = drivers({ DB_ENGINE: 'sqlite' });
 
 beforeAll(async () => {
   await global.db.connectDB(':memory:');
