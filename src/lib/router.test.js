@@ -1,6 +1,5 @@
 const express = require('express');
 const supertest = require('supertest');
-const { deleteAll, dropTable } = require('automata-db');
 const { router: users } = require('automata-user-management');
 const { errors } = require('automata-utils');
 
@@ -11,7 +10,7 @@ const columns = [{ name: 'foo', required: true, type: 'string' }];
 
 const table = { columns, name: 'test' };
 
-let db;
+const { db } = global;
 let api;
 
 const baseUrl = '/test';
@@ -35,8 +34,6 @@ const create = async ({ token, resource = { foo: 'bar' } }) => {
 
 describe('rest router', () => {
   beforeAll(async () => {
-    db = global.client;
-
     const SECRET = `shhh ${Math.random()}`;
     // Not needed, but doesn hurt
     const EMAIL_VERIFICATION_SECRET = `sshh ${Math.random()}`;
@@ -49,10 +46,10 @@ describe('rest router', () => {
     api = supertest(app);
   });
 
-  afterAll(() => dropTable(db, table.name));
+  afterAll(() => db.dropTable(table.name));
 
   afterEach(async () => {
-    await deleteAll(db, table.name);
+    await db.deleteAll(table.name);
   });
 
   it('should throw accessDenied, if user missing', async () => {

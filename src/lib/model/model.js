@@ -1,30 +1,17 @@
 const { randomUUID } = require('node:crypto');
 
-const {
-  createTable: dbCreateTable,
-  deleteOne: dbDeleteOne,
-  find: dbFind,
-  findOne: dbFindOne,
-  fromDB,
-  insertOne: dbInsertOne,
-  replaceOne: dbReplaceOne,
-  toDB,
-} = require('automata-db');
-
 const { NODE_ENV } = require('../../config');
 const restTable = require('./rest-table');
 const getValidator = require('./get-validator');
 
 const restModel = (db, table, { userRequired = true, validator = null } = {}) => {
-  const client = db;
-
   const rTable = restTable(table, { userRequired });
   const { name: tableName, columns } = rTable;
 
   let shape;
   const init = async () => {
     shape = await getValidator(rTable, { userRequired, validator });
-    await dbCreateTable(client, rTable);
+    await db.createTable(rTable);
   };
   init();
 
@@ -33,18 +20,18 @@ const restModel = (db, table, { userRequired = true, validator = null } = {}) =>
 
     await shape.validate(row);
 
-    await dbInsertOne(client, tableName, toDB(row));
+    await db.insertOne(tableName, db.toDB(row));
 
     return row;
   };
 
   const findOne = async (where) => (
-    fromDB(await dbFindOne(client, tableName, toDB(where)), columns)
+    db.fromDB(await db.findOne(tableName, db.toDB(where)), columns)
   );
 
   const find = async (where, options) => (
-    await dbFind(client, tableName, toDB(where), options) || []
-  ).map((row) => fromDB(row, columns));
+    await db.find(tableName, db.toDB(where), options) || []
+  ).map((row) => db.fromDB(row, columns));
 
   const replaceOne = async (where, replacement) => {
     if (!where.id) {
@@ -54,11 +41,11 @@ const restModel = (db, table, { userRequired = true, validator = null } = {}) =>
     const newRow = { ...replacement, modified: new Date() };
     await shape.validate(newRow);
 
-    return dbReplaceOne(client, tableName, toDB(where), toDB(newRow));
+    return db.replaceOne(tableName, db.toDB(where), db.toDB(newRow));
   };
 
   const deleteOne = ({ id, ...where }) => !!id
-    && dbDeleteOne(client, tableName, toDB({ ...where, id }));
+    && db.deleteOne(tableName, db.toDB({ ...where, id }));
 
   return {
     deleteOne,

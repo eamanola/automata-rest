@@ -1,5 +1,3 @@
-const { count, deleteAll, dropTable } = require('automata-db');
-
 const restController = require('./controller');
 const restModel = require('./model');
 
@@ -7,7 +5,7 @@ const columns = [{ name: 'foo', required: true, type: 'string' }];
 
 const table = { columns, name: 'test' };
 
-let db;
+const { db } = global;
 let controller;
 
 const createResource = async (userId) => {
@@ -17,16 +15,15 @@ const createResource = async (userId) => {
 
 describe('rest controller', () => {
   beforeAll(async () => {
-    db = global.client;
     controller = restController(null, { db, table });
   });
 
   afterAll(async () => {
-    await dropTable(db, table.name);
+    await db.dropTable(table.name);
   });
 
   afterEach(async () => {
-    await deleteAll(db, table.name);
+    await db.deleteAll(table.name);
   });
 
   describe('userRequired', () => {
@@ -75,11 +72,11 @@ describe('rest controller', () => {
       const userId = 'foo';
       const resource = { foo: 'bar' };
 
-      expect(await count(db, table.name)).toBe(0);
+      expect(await db.count(table.name)).toBe(0);
 
       await controller.create(userId, resource);
 
-      expect(await count(db, table.name)).toBe(1);
+      expect(await db.count(table.name)).toBe(1);
     });
 
     it('should override owner', async () => {
@@ -156,7 +153,7 @@ describe('rest controller', () => {
       const userId2 = 'bar';
       await createResource(userId2);
 
-      expect(await count(db, table.name)).toBe(2);
+      expect(await db.count(table.name)).toBe(2);
 
       expect((await controller.byOwner(userId)).length).toBe(1);
       expect((await controller.byOwner(userId2)).length).toBe(1);
@@ -272,7 +269,7 @@ describe('rest controller', () => {
 
   describe('require user', () => {
     it('should support un auth access', async () => {
-      await dropTable(db, table.name);
+      await db.dropTable(table.name);
       const model = restModel(db, table, { userRequired: false });
       await model.init();
 
@@ -287,14 +284,14 @@ describe('rest controller', () => {
       const resource = { foo: 'bar' };
 
       const { id } = await createUnAuth(null, resource);
-      expect(await count(db, table.name)).toBe(1);
+      expect(await db.count(table.name)).toBe(1);
 
       const created = await byIdUnAuth(null, { id });
       expect(created).toEqual(expect.objectContaining(resource));
 
-      expect((await byOwnerUnAuth(null)).length).toBe(await count(db, table.name));
+      expect((await byOwnerUnAuth(null)).length).toBe(await db.count(table.name));
       const { id: secondId } = await createUnAuth(null, resource);
-      expect((await byOwnerUnAuth(null)).length).toBe(await count(db, table.name));
+      expect((await byOwnerUnAuth(null)).length).toBe(await db.count(table.name));
       await removeUnAuth(null, { id: secondId });
 
       const modified = { ...created, foo: 'baz' };
@@ -306,7 +303,7 @@ describe('rest controller', () => {
       expect(updated.foo).toBe(modified.foo);
 
       await removeUnAuth(null, { id });
-      expect(await count(db, table.name)).toBe(0);
+      expect(await db.count(table.name)).toBe(0);
     });
   });
 });

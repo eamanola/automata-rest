@@ -1,5 +1,4 @@
 const { string, object } = require('yup');
-const { count, deleteAll, dropTable } = require('automata-db');
 
 const restModel = require('.');
 
@@ -8,31 +7,30 @@ const columns = [{ name: 'foo', required: true, type: 'string' }];
 const table = { columns, name: 'test' };
 
 let model;
-let client;
+const { db } = global;
 
 describe('rest-model', () => {
   beforeAll(() => {
-    client = global.client;
-    model = restModel(client, table, { userRequired: false });
+    model = restModel(db, table, { userRequired: false });
   });
 
-  afterAll(() => dropTable(client, table.name));
+  afterAll(() => db.dropTable(table.name));
 
-  afterEach(() => deleteAll(client, table.name));
+  afterEach(() => db.deleteAll(table.name));
 
   describe('insert', () => {
     it('should create one', async () => {
       const newResource = { foo: 'bar' };
-      expect(await count(client, table.name)).toBe(0);
+      expect(await db.count(table.name)).toBe(0);
 
       await model.insertOne(newResource);
 
-      expect(await count(client, table.name)).toBe(1);
+      expect(await db.count(table.name)).toBe(1);
       expect(await model.findOne(newResource)).toBeTruthy();
     });
 
     it('should not create invalid', async () => {
-      expect(await count(client, table.name)).toBe(0);
+      expect(await db.count(table.name)).toBe(0);
 
       const newResource = { bar: 'bar' };
 
@@ -41,7 +39,7 @@ describe('rest-model', () => {
       } catch (err) {
         expect(err).toBeTruthy();
       } finally {
-        expect(await count(client, table.name)).toBe(0);
+        expect(await db.count(table.name)).toBe(0);
       }
     });
   });
@@ -55,7 +53,7 @@ describe('rest-model', () => {
 
       await model.replaceOne(inserted, modified);
 
-      expect(await count(client, table.name)).toBe(1);
+      expect(await db.count(table.name)).toBe(1);
       const replaced = await model.findOne({ id: inserted.id });
       expect(replaced.foo).toBe(modified.foo);
     });
@@ -78,27 +76,27 @@ describe('rest-model', () => {
     it('should delete one', async () => {
       const existing = await model.insertOne({ foo: 'bar' });
 
-      expect(await count(client, table.name)).toBe(1);
+      expect(await db.count(table.name)).toBe(1);
 
       await model.deleteOne(existing);
 
-      expect(await count(client, table.name)).toBe(0);
+      expect(await db.count(table.name)).toBe(0);
     });
 
     it('should require id to delete', async () => {
       const { id, ...resource } = await model.insertOne({ foo: 'bar' });
       expect(await model.findOne(resource)).toBeTruthy();
-      expect(await count(client, table.name)).toBe(1);
+      expect(await db.count(table.name)).toBe(1);
 
       await model.deleteOne(resource);
 
       expect(await model.findOne(resource)).toBeTruthy();
-      expect(await count(client, table.name)).toBe(1);
+      expect(await db.count(table.name)).toBe(1);
     });
 
     it('should not delete randomly', async () => {
       const { id } = await model.insertOne({ foo: 'bar' });
-      expect(await count(client, table.name)).toBe(1);
+      expect(await db.count(table.name)).toBe(1);
 
       try {
         await model.deleteOne(null);
@@ -106,7 +104,7 @@ describe('rest-model', () => {
       } catch (err) {
         expect(err).toBeTruthy();
       } finally {
-        expect(await count(client, table.name)).toBe(1);
+        expect(await db.count(table.name)).toBe(1);
       }
 
       try {
@@ -115,7 +113,7 @@ describe('rest-model', () => {
       } catch (err) {
         expect(err).toBeTruthy();
       } finally {
-        expect(await count(client, table.name)).toBe(1);
+        expect(await db.count(table.name)).toBe(1);
       }
 
       try {
@@ -124,7 +122,7 @@ describe('rest-model', () => {
       } catch (err) {
         expect(err).toBeTruthy();
       } finally {
-        expect(await count(client, table.name)).toBe(1);
+        expect(await db.count(table.name)).toBe(1);
       }
 
       try {
@@ -133,7 +131,7 @@ describe('rest-model', () => {
       } catch (err) {
         expect(err).toBeTruthy();
       } finally {
-        expect(await count(client, table.name)).toBe(1);
+        expect(await db.count(table.name)).toBe(1);
       }
 
       expect(await model.findOne({ id })).toBeTruthy();
@@ -177,11 +175,11 @@ describe('rest-model', () => {
   });
 
   describe('optional params', () => {
-    beforeEach(async () => dropTable(client, table.name));
+    beforeEach(async () => db.dropTable(table.name));
 
     describe('userRequired', () => {
       it('insert should require owner property', async () => {
-        const aModel = restModel(client, table, { userRequired: true });
+        const aModel = restModel(db, table, { userRequired: true });
         await aModel.init();
 
         const resource = { foo: 'bar' };
@@ -198,7 +196,7 @@ describe('rest-model', () => {
       });
 
       it('replace should require owner property', async () => {
-        const aModel = restModel(client, table, { userRequired: true });
+        const aModel = restModel(db, table, { userRequired: true });
         await aModel.init();
 
         const inserted = await aModel.insertOne({ foo: 'bar', owner: 'baz' });
@@ -224,7 +222,7 @@ describe('rest-model', () => {
     describe('validator', () => {
       it('should accept a custom validator', async () => {
         const validator = object({ foo: string().email().required() }).noUnknown().strict();
-        const aModel = restModel(client, table, { userRequired: false, validator });
+        const aModel = restModel(db, table, { userRequired: false, validator });
         await aModel.init();
 
         try {
@@ -249,7 +247,7 @@ describe('rest-model', () => {
         'owner',
       ].forEach((reserved) => {
         try {
-          restModel(client, { ...table, columns: [{ name: reserved, type: 'string' }] });
+          restModel(db, { ...table, columns: [{ name: reserved, type: 'string' }] });
           expect('unreachable').toBe(true);
         } catch ({ message }) {
           expect(/reserved/u.test(message)).toBe(true);
@@ -260,10 +258,10 @@ describe('rest-model', () => {
 
   describe('type conversion', () => {
     it('should return right types', async () => {
-      await dropTable(client, table.name);
+      await db.dropTable(table.name);
 
       const aModel = restModel(
-        client,
+        db,
         {
           ...table,
           columns: [
