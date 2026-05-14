@@ -35,7 +35,7 @@ importers:
         version: 10.0.1(eslint@10.3.0)
       automata-user-management:
         specifier: github:eamanola/automata-user-management
-        version: git+https://git@github.com:eamanola/automata-user-management.git#0c1a0937fe2b60f4baf93a8392e7de0ed1d2c172
+        version: git+https://git@github.com:eamanola/automata-user-management.git#033440ec02ee999612a751699ffe2119f19d9ac2
       babel-loader:
         specifier: ^10.1.1
         version: 10.1.1(@babel/core@7.29.0)(webpack@5.106.2)
@@ -1225,9 +1225,9 @@ packages:
     resolution: {commit: 82bfae93ff78a399b784ed010e032ec15cecbbac, repo: git@github.com:eamanola/automata-db.git, type: git}
     version: 0.1.12
 
-  automata-user-management@git+https://git@github.com:eamanola/automata-user-management.git#0c1a0937fe2b60f4baf93a8392e7de0ed1d2c172:
-    resolution: {commit: 0c1a0937fe2b60f4baf93a8392e7de0ed1d2c172, repo: git@github.com:eamanola/automata-user-management.git, type: git}
-    version: 0.3.4
+  automata-user-management@git+https://git@github.com:eamanola/automata-user-management.git#033440ec02ee999612a751699ffe2119f19d9ac2:
+    resolution: {commit: 033440ec02ee999612a751699ffe2119f19d9ac2, repo: git@github.com:eamanola/automata-user-management.git, type: git}
+    version: 0.3.5
 
   automata-utils@git+https://git@github.com:eamanola/automata-utils.git#cf134bc419e94867b7afa836c4878c730a3252e4:
     resolution: {commit: cf134bc419e94867b7afa836c4878c730a3252e4, repo: git@github.com:eamanola/automata-utils.git, type: git}
@@ -4438,7 +4438,7 @@ snapshots:
       - snappy
       - socks
 
-  automata-user-management@git+https://git@github.com:eamanola/automata-user-management.git#0c1a0937fe2b60f4baf93a8392e7de0ed1d2c172:
+  automata-user-management@git+https://git@github.com:eamanola/automata-user-management.git#033440ec02ee999612a751699ffe2119f19d9ac2:
     dependencies:
       automata-db: git+https://git@github.com:eamanola/automata-db.git#82bfae93ff78a399b784ed010e032ec15cecbbac
       automata-utils: git+https://git@github.com:eamanola/automata-utils.git#cf134bc419e94867b7afa836c4878c730a3252e4
