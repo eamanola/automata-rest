@@ -1,6 +1,6 @@
 {
   "name": "automata-rest",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "rest api helper",
   "main": "dist/index.bundle.js",
   "type": "commonjs",
@@ -10,7 +10,7 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint .",
-    "build": "node esbuild.commonjs.cjs",
+    "build": "node esbuild.config.cjs",
     "prepack": "npm run build",
     "prepare": "husky || true"
   },
