@@ -3,6 +3,7 @@ const esbuild = require('esbuild');
 esbuild.build({
   bundle: true,
   entryPoints: ['src/index.js'],
+  format: 'cjs',
   // minify: true,
   outfile: 'dist/index.bundle.js',
   packages: 'external',
