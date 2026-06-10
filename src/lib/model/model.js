@@ -33,7 +33,7 @@ const restModel = (db, table, { userRequired = true, validator = null } = {}) =>
     await db.find(tableName, db.toDB(where), options) || []
   ).map((row) => db.fromDB(row, columns));
 
-  const replaceOne = async (where, replacement) => {
+  const updateOne = async (where, replacement) => {
     if (!where.id) {
       throw new Error('id is required');
     }
@@ -41,7 +41,7 @@ const restModel = (db, table, { userRequired = true, validator = null } = {}) =>
     const newRow = { ...replacement, modified: new Date() };
     await shape.validate(newRow);
 
-    return db.replaceOne(tableName, db.toDB(where), db.toDB(newRow));
+    return db.updateOne(tableName, db.toDB(where), db.toDB(newRow));
   };
 
   const deleteOne = ({ id, ...where }) => !!id
@@ -53,7 +53,7 @@ const restModel = (db, table, { userRequired = true, validator = null } = {}) =>
     findOne,
     init: NODE_ENV === 'test' ? init : undefined,
     insertOne,
-    replaceOne,
+    updateOne,
   };
 };
 

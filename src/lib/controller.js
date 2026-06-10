@@ -13,7 +13,7 @@ const restController = (
   } = {},
 ) => {
   const {
-    deleteOne, findOne, find, insertOne, replaceOne,
+    deleteOne, findOne, find, insertOne, updateOne,
   } = model || restModel(db, table, { userRequired, validator });
 
   const addOwner = (userId, obj) => {
@@ -54,7 +54,7 @@ const restController = (
 
   const update = async (userId, resource) => {
     try {
-      await replaceOne(addOwner(userId, { id: resource.id }), addOwner(userId, resource));
+      await updateOne(addOwner(userId, { id: resource.id }), addOwner(userId, resource));
     } catch (err) {
       if (err.name === 'ValidationError') {
         logger.info(err.message);

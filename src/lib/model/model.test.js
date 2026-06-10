@@ -2,7 +2,9 @@ const { string, object } = require('yup');
 
 const restModel = require('.');
 
-const columns = [{ name: 'foo', required: true, type: 'string' }];
+const columns = [
+  { name: 'foo', required: true, type: 'string' },
+];
 
 const table = { columns, name: 'test' };
 
@@ -44,26 +46,26 @@ describe('rest-model', () => {
     });
   });
 
-  describe('replace', () => {
-    it('should replace one', async () => {
+  describe('update', () => {
+    it('should update one', async () => {
       const inserted = await model.insertOne({ foo: 'bar' });
       const modified = { ...inserted, foo: 'baz' };
 
       expect(inserted.foo).not.toBe(modified.foo);
 
-      await model.replaceOne(inserted, modified);
+      await model.updateOne(inserted, modified);
 
       expect(await db.count(table.name)).toBe(1);
-      const replaced = await model.findOne({ id: inserted.id });
-      expect(replaced.foo).toBe(modified.foo);
+      const updated = await model.findOne({ id: inserted.id });
+      expect(updated.foo).toBe(modified.foo);
     });
 
-    it('should not replace invalid', async () => {
+    it('should not update invalid', async () => {
       const inserted = await model.insertOne({ foo: 'bar' });
       const modified = { bar: 'baz' };
 
       try {
-        await model.replaceOne(inserted, modified);
+        await model.updateOne(inserted, modified);
       } catch (err) {
         expect(err).toBeTruthy();
       }
@@ -195,7 +197,7 @@ describe('rest-model', () => {
         expect(inserted).toEqual(expect.objectContaining(resource));
       });
 
-      it('replace should require owner property', async () => {
+      it('update should require owner property', async () => {
         const aModel = restModel(db, table, { userRequired: true });
         await aModel.init();
 
@@ -206,7 +208,7 @@ describe('rest-model', () => {
         expect(inserted.foo).not.toBe(modified.foo);
 
         try {
-          await aModel.replaceOne(inserted, modified);
+          await aModel.updateOne(inserted, modified);
           expect('unreachable').toBe(true);
         } catch ({ message }) {
           expect(/owner is a required field/u.test(message)).toBe(true);
@@ -214,7 +216,7 @@ describe('rest-model', () => {
           expect((await aModel.findOne({ id })).foo).toBe(inserted.foo);
         }
 
-        await aModel.replaceOne(inserted, { ...modified, owner: 'owner' });
+        await aModel.updateOne(inserted, { ...modified, owner: 'owner' });
         expect((await aModel.findOne({ id })).foo).toBe(modified.foo);
       });
     });

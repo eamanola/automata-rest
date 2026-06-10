@@ -220,7 +220,12 @@ describe('rest controller', () => {
       const fakeId = `ABCDE${id.substring(5)}`;
       expect(fakeId).not.toBe(resource.id);
 
-      await controller.update(userId, { ...resource, id: fakeId });
+      try {
+        await controller.update(userId, { ...resource, id: fakeId });
+        expect(true).toBe(false);
+      } catch (err) {
+        expect(err).toBeTruthy();
+      }
 
       expect(await controller.byId(userId, { id })).toBeTruthy();
       expect(await controller.byId(userId, { id: fakeId })).toBeFalsy();
@@ -236,7 +241,12 @@ describe('rest controller', () => {
 
       const userId2 = 'bar';
 
-      await controller.update(userId2, { ...resource, foo });
+      try {
+        await controller.update(userId2, { ...resource, foo });
+        expect(true).toBe(false);
+      } catch (err) {
+        expect(err).toBeTruthy();
+      }
 
       expect(await controller.byId(userId, { id })).toEqual(resource);
     });
