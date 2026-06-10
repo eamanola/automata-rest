@@ -13,7 +13,7 @@ importers:
         version: https://codeload.github.com/eamanola/automata-cache/tar.gz/7c0b5e4d01e03a630022f858c0bf3d348c73c69c
       automata-db:
         specifier: github:eamanola/automata-db
-        version: git+https://git@github.com:eamanola/automata-db.git#458c62fad386d4749230e4b9f8c1b0bffeb658c4(better-sqlite3@12.10.0)
+        version: git+https://git@github.com:eamanola/automata-db.git#aa5e6f0c38e634d7a0da3732c9e2152864ec99bf(better-sqlite3@12.10.0)
       automata-utils:
         specifier: github:eamanola/automata-utils
         version: git+https://git@github.com:eamanola/automata-utils.git#2e6179d246d5145a78232ee03a15a452047c4698
@@ -870,9 +870,9 @@ packages:
     resolution: {gitHosted: true, tarball: https://codeload.github.com/eamanola/automata-cache/tar.gz/7c0b5e4d01e03a630022f858c0bf3d348c73c69c}
     version: 0.0.21
 
-  automata-db@git+https://git@github.com:eamanola/automata-db.git#458c62fad386d4749230e4b9f8c1b0bffeb658c4:
-    resolution: {commit: 458c62fad386d4749230e4b9f8c1b0bffeb658c4, repo: git@github.com:eamanola/automata-db.git, type: git}
-    version: 0.1.20
+  automata-db@git+https://git@github.com:eamanola/automata-db.git#aa5e6f0c38e634d7a0da3732c9e2152864ec99bf:
+    resolution: {commit: aa5e6f0c38e634d7a0da3732c9e2152864ec99bf, repo: git@github.com:eamanola/automata-db.git, type: git}
+    version: 0.1.25
     peerDependencies:
       better-sqlite3: ^12.10.0
       mongodb: ^7.2.0
@@ -2107,11 +2107,6 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
-  semver@7.8.4:
-    resolution: {integrity: sha512-rUCObTnP32Q08R2uuIrt7r9PlEonuTmtuXYcW6s5kjdlj3xbnwe+21yXptAUYcMAABLkYYTtnmzb3w3EDZfueA==}
-    engines: {node: '>=10'}
-    hasBin: true
-
   send@1.2.1:
     resolution: {integrity: sha512-1gnZf7DFcoIcajTjTwjwuDjzuz4PPcY2StKPlsGAQ1+YH20IRVrBaXSWmdjowTJ6u8Rc01PoYOGHXfP1mYcZNQ==}
     engines: {node: '>= 18'}
@@ -3168,7 +3163,7 @@ snapshots:
       - '@node-rs/xxhash'
       - '@opentelemetry/api'
 
-  automata-db@git+https://git@github.com:eamanola/automata-db.git#458c62fad386d4749230e4b9f8c1b0bffeb658c4(better-sqlite3@12.10.0):
+  automata-db@git+https://git@github.com:eamanola/automata-db.git#aa5e6f0c38e634d7a0da3732c9e2152864ec99bf(better-sqlite3@12.10.0):
     dependencies:
       dotenv: 17.4.2
       yup: 1.7.1
@@ -3177,7 +3172,7 @@ snapshots:
 
   automata-user-management@git+https://git@github.com:eamanola/automata-user-management.git#b6dc9f49fb5d75dc3bf3fce4f5be33cb289c67ec(better-sqlite3@12.10.0):
     dependencies:
-      automata-db: git+https://git@github.com:eamanola/automata-db.git#458c62fad386d4749230e4b9f8c1b0bffeb658c4(better-sqlite3@12.10.0)
+      automata-db: git+https://git@github.com:eamanola/automata-db.git#aa5e6f0c38e634d7a0da3732c9e2152864ec99bf(better-sqlite3@12.10.0)
       automata-utils: git+https://git@github.com:eamanola/automata-utils.git#2e6179d246d5145a78232ee03a15a452047c4698
       bcrypt: 6.0.0
       dotenv: 17.4.2
@@ -3903,7 +3898,7 @@ snapshots:
       '@babel/parser': 7.29.7
       '@istanbuljs/schema': 0.1.6
       istanbul-lib-coverage: 3.2.2
-      semver: 7.8.4
+      semver: 7.8.3
     transitivePeerDependencies:
       - supports-color
 
@@ -4188,7 +4183,7 @@ snapshots:
       jest-message-util: 30.4.1
       jest-util: 30.4.1
       pretty-format: 30.4.1
-      semver: 7.8.4
+      semver: 7.8.3
       synckit: 0.11.13
     transitivePeerDependencies:
       - supports-color
@@ -4273,7 +4268,7 @@ snapshots:
       lodash.isstring: 4.0.1
       lodash.once: 4.1.1
       ms: 2.1.3
-      semver: 7.8.4
+      semver: 7.8.3
 
   jwa@2.0.1:
     dependencies:
@@ -4329,7 +4324,7 @@ snapshots:
 
   make-dir@4.0.0:
     dependencies:
-      semver: 7.8.4
+      semver: 7.8.3
 
   makeerror@1.0.12:
     dependencies:
@@ -4393,7 +4388,7 @@ snapshots:
 
   node-abi@3.92.0:
     dependencies:
-      semver: 7.8.4
+      semver: 7.8.3
 
   node-addon-api@8.8.0: {}
 
@@ -4594,8 +4589,6 @@ snapshots:
   semver@6.3.1: {}
 
   semver@7.8.3: {}
-
-  semver@7.8.4: {}
 
   send@1.2.1:
     dependencies:

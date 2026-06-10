@@ -13,7 +13,7 @@ const restController = (
   } = {},
 ) => {
   const {
-    deleteOne, findOne, find, insertOne, updateOne,
+    deleteOne, findOne, find, insertOne, update: dbUpdate, updateOne: dbUpdateOne,
   } = model || restModel(db, table, { userRequired, validator });
 
   const addOwner = (userId, obj) => {
@@ -54,9 +54,26 @@ const restController = (
 
   const update = async (userId, resources) => {
     try {
-      await Promise.all(resources.map(({ id, ...rest }) => (
-        updateOne(addOwner(userId, { id }), addOwner(userId, { ...rest, id }))
-      )));
+      await dbUpdate(
+        resources.map(({ id }) => addOwner(userId, { id })),
+        resources.map((resource) => addOwner(userId, resource)),
+      );
+    } catch (err) {
+      if (err.name === 'ValidationError') {
+        logger.info(err.message);
+        throw createParamError(err);
+      }
+
+      throw err;
+    }
+  };
+
+  const updateOne = async (userId, resource) => {
+    try {
+      await dbUpdateOne(
+        addOwner(userId, { id: resource.id }),
+        addOwner(userId, resource),
+      );
     } catch (err) {
       if (err.name === 'ValidationError') {
         logger.info(err.message);
@@ -70,7 +87,7 @@ const restController = (
   const remove = async (userId, { id }) => deleteOne(addOwner(userId, { id }));
 
   return {
-    byId, byOwner, create, remove, update,
+    byId, byOwner, create, remove, update, updateOne,
   };
 };
 

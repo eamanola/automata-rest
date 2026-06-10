@@ -17,7 +17,7 @@ const restRouter = (controller, {
   validator,
 } = {}) => {
   const {
-    create, byId, byOwner, update, remove,
+    create, byId, byOwner, updateOne, update, remove,
   } = controller || restController(
     null,
     {
@@ -78,7 +78,7 @@ const restRouter = (controller, {
 
     try {
       const { user, body, params } = req;
-      await update(user?.id, [body]);
+      await updateOne(user?.id, body);
 
       const { id } = params;
       const updated = await byId(user?.id, { id });
@@ -91,19 +91,19 @@ const restRouter = (controller, {
     }
   };
 
-  // const putMany = async (req, res, next) => {
-  //   try {
-  //     const { user, body } = req;
-  //     await Promise.all(body.map((resource) => update(user?.id, resource)));
+  const putMany = async (req, res, next) => {
+    try {
+      const { user, body } = req;
 
-  //     const ids = body.map(({ id }) => id);
-  //     const updates = Promise.all(ids.map((id) => byId(user?.id, { id })));
+      await update(user?.id, body);
 
-  //     res.status(200).json({ message: 'OK', [resultsKey]: updates });
-  //   } catch (err) {
-  //     next(err);
-  //   }
-  // };
+      const updates = await Promise.all(body.map(({ id }) => byId(user?.id, { id })));
+
+      res.status(200).json({ message: 'OK', [resultsKey]: updates });
+    } catch (err) {
+      next(err);
+    }
+  };
 
   const deleteHandler = async (req, res, next) => {
     let error = null;
@@ -135,7 +135,7 @@ const restRouter = (controller, {
 
   router.put('/:id', put);
 
-  // router.put('/:id', putMany);
+  router.put('/', putMany);
 
   router.delete('/:id', deleteHandler);
 

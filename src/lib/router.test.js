@@ -208,6 +208,104 @@ describe('rest router', () => {
     });
   });
 
+  describe('PUT /', () => {
+    it('should update many', async () => {
+      const { token } = await getToken(api);
+      const inserted1 = await create({ token });
+      const inserted2 = await create({ token });
+
+      const changed1 = { ...inserted1, foo: 'foo1' };
+      expect(changed1.foo).not.toBe(inserted1.foo);
+      const changed2 = { ...inserted2, foo: 'foo2' };
+      expect(changed2.foo).not.toBe(inserted2.foo);
+
+      const { body, status } = await api
+        .put(baseUrl)
+        .set({ Authorization: `bearer ${token}` })
+        .send([changed1, changed2]);
+
+      expect(status).toBe(200);
+      const { results, message } = body;
+      expect(message).toBe('OK');
+
+      const result1 = results.find(({ id }) => id === changed1.id);
+      expect(result1).toBeTruthy();
+      const result2 = results.find(({ id }) => id === changed2.id);
+      expect(result2).toBeTruthy();
+
+      const { modified: modified1, ...rest1 } = changed1;
+      expect(result1).toEqual(expect.objectContaining(rest1));
+      const { modified: modified2, ...rest2 } = changed2;
+      expect(result2).toEqual(expect.objectContaining(rest2));
+
+      const updated1 = await getById(inserted1.id, token);
+      expect(updated1.foo).toBe(changed1.foo);
+      const updated2 = await getById(inserted2.id, token);
+      expect(updated2.foo).toBe(changed2.foo);
+
+      expect(updated1.id).toBeTruthy();
+      expect(updated2.id).toBeTruthy();
+      expect(updated1.id).not.toBe(updated2.id);
+    });
+
+    it('should throw paramError, on invalid params', async () => {
+      const { paramError } = errors;
+      const { token } = await getToken(api);
+      const inserted = await create({ token });
+
+      const invalid = { ...inserted, foo: '' };
+      expect(invalid.foo).not.toBe(inserted.foo);
+
+      const { status } = await api
+        .put(baseUrl)
+        .set({ Authorization: `bearer ${token}` })
+        .send([invalid]);
+
+      expect(status).toBe(paramError.status);
+
+      const updated = await getById(inserted.id, token);
+
+      expect(updated).toEqual(inserted);
+    });
+
+    it('should not update owner, or modified', async () => {
+      const { token } = await getToken(api);
+      const inserted = await create({ token });
+
+      const modified = { ...inserted, modified: 'bar', owner: 'foo' };
+      expect(modified.owner).not.toBe(inserted.owner);
+      expect(modified.modified).not.toBe(inserted.modified);
+
+      await api
+        .put(baseUrl)
+        .set({ Authorization: `bearer ${token}` })
+        .send([modified]);
+
+      const updated = await getById(inserted.id, token);
+      expect(updated.owner).toBe(inserted.owner);
+      expect(updated.modified).not.toBe(modified.modified);
+    });
+
+    it('should not update id', async () => {
+      const { token } = await getToken(api);
+      const inserted = await create({ token });
+
+      const modified = { ...inserted, id: `ABCDE${inserted.id.substring(5)}` };
+      expect(modified.id).not.toBe(inserted.id);
+
+      await api
+        .put(baseUrl)
+        .set({ Authorization: `bearer ${token}` })
+        .send([modified]);
+
+      const updated = await getById(modified.id, token);
+      expect(updated).toBe(null);
+
+      const original = await getById(inserted.id, token);
+      expect(original).toEqual(inserted);
+    });
+  });
+
   describe('DELETE /:id', () => {
     it('should remove by id', async () => {
       const { token } = await getToken(api);
