@@ -10,13 +10,13 @@ importers:
     dependencies:
       automata-cache:
         specifier: github:eamanola/automata-cache
-        version: https://codeload.github.com/eamanola/automata-cache/tar.gz/6575b6940c80c6f675ede1d431a8473225e1aca9
+        version: https://codeload.github.com/eamanola/automata-cache/tar.gz/7c0b5e4d01e03a630022f858c0bf3d348c73c69c
       automata-db:
         specifier: github:eamanola/automata-db
         version: git+https://git@github.com:eamanola/automata-db.git#458c62fad386d4749230e4b9f8c1b0bffeb658c4(better-sqlite3@12.10.0)
       automata-utils:
         specifier: github:eamanola/automata-utils
-        version: git+https://git@github.com:eamanola/automata-utils.git#7fc92b6be5ad76b3ad0d5ad64d3ce8e2ea409f18
+        version: git+https://git@github.com:eamanola/automata-utils.git#2e6179d246d5145a78232ee03a15a452047c4698
       dotenv:
         specifier: ^17.4.2
         version: 17.4.2
@@ -32,7 +32,7 @@ importers:
         version: 10.0.1(eslint@10.4.1)
       automata-user-management:
         specifier: github:eamanola/automata-user-management
-        version: git+https://git@github.com:eamanola/automata-user-management.git#501908a2120d787b97f2d869132ced9359527931(better-sqlite3@12.10.0)
+        version: git+https://git@github.com:eamanola/automata-user-management.git#b6dc9f49fb5d75dc3bf3fce4f5be33cb289c67ec(better-sqlite3@12.10.0)
       better-sqlite3:
         specifier: ^12.10.0
         version: 12.10.0
@@ -685,8 +685,8 @@ packages:
   '@types/yargs@17.0.35':
     resolution: {integrity: sha512-qUHkeCyQFxMXg79wQfTtfndEC+N9ZZg76HJftDJp+qH2tV7Gj4OJi7l+PiWwJ+pWtW8GwSmqsDj/oymhrTWXjg==}
 
-  '@typescript-eslint/types@8.60.1':
-    resolution: {integrity: sha512-4h0tY8ppCkdCzcrl2YM5M3my0xsE1Tf8om3owEu5oPWmXwkKRmk0j0LGDzYBGUcAlesEbxBhazqu/K4cu3Ug7w==}
+  '@typescript-eslint/types@8.61.0':
+    resolution: {integrity: sha512-9QTQpZ5Iin4CdIodfbDQFSeiSJKidgYJYug1P9CC2xWgUTvlmixViqDZNciMjwLBZyJnG4tGmPl97rVAFb1AJg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@ungap/structured-clone@1.3.1':
@@ -866,9 +866,9 @@ packages:
   asynckit@0.4.0:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
 
-  automata-cache@https://codeload.github.com/eamanola/automata-cache/tar.gz/6575b6940c80c6f675ede1d431a8473225e1aca9:
-    resolution: {gitHosted: true, tarball: https://codeload.github.com/eamanola/automata-cache/tar.gz/6575b6940c80c6f675ede1d431a8473225e1aca9}
-    version: 0.0.17
+  automata-cache@https://codeload.github.com/eamanola/automata-cache/tar.gz/7c0b5e4d01e03a630022f858c0bf3d348c73c69c:
+    resolution: {gitHosted: true, tarball: https://codeload.github.com/eamanola/automata-cache/tar.gz/7c0b5e4d01e03a630022f858c0bf3d348c73c69c}
+    version: 0.0.21
 
   automata-db@git+https://git@github.com:eamanola/automata-db.git#458c62fad386d4749230e4b9f8c1b0bffeb658c4:
     resolution: {commit: 458c62fad386d4749230e4b9f8c1b0bffeb658c4, repo: git@github.com:eamanola/automata-db.git, type: git}
@@ -885,13 +885,13 @@ packages:
       mongodb-memory-server:
         optional: true
 
-  automata-user-management@git+https://git@github.com:eamanola/automata-user-management.git#501908a2120d787b97f2d869132ced9359527931:
-    resolution: {commit: 501908a2120d787b97f2d869132ced9359527931, repo: git@github.com:eamanola/automata-user-management.git, type: git}
-    version: 0.3.19
+  automata-user-management@git+https://git@github.com:eamanola/automata-user-management.git#b6dc9f49fb5d75dc3bf3fce4f5be33cb289c67ec:
+    resolution: {commit: b6dc9f49fb5d75dc3bf3fce4f5be33cb289c67ec, repo: git@github.com:eamanola/automata-user-management.git, type: git}
+    version: 0.3.21
 
-  automata-utils@git+https://git@github.com:eamanola/automata-utils.git#7fc92b6be5ad76b3ad0d5ad64d3ce8e2ea409f18:
-    resolution: {commit: 7fc92b6be5ad76b3ad0d5ad64d3ce8e2ea409f18, repo: git@github.com:eamanola/automata-utils.git, type: git}
-    version: 0.0.29
+  automata-utils@git+https://git@github.com:eamanola/automata-utils.git#2e6179d246d5145a78232ee03a15a452047c4698:
+    resolution: {commit: 2e6179d246d5145a78232ee03a15a452047c4698, repo: git@github.com:eamanola/automata-utils.git, type: git}
+    version: 0.0.30
 
   babel-jest@30.4.1:
     resolution: {integrity: sha512-fATAbM8piYxkiXQp3RBXmZHxZVNJZAVXXfyeyCN2Tida3+qJ8ea9UxhiJ2y4fLO90ZImKt6k9FlcH2+rLkJGhw==}
@@ -1164,8 +1164,8 @@ packages:
   ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
 
-  electron-to-chromium@1.5.368:
-    resolution: {integrity: sha512-7RckJJK4uESJF9PxvfMWd3TGqIiieUTG4HxnKaKuIpGbcr+r2ZEB3g2gAhCP3Fqm42vJSzLfgab9eva/C4/XVw==}
+  electron-to-chromium@1.5.370:
+    resolution: {integrity: sha512-D5tSHJReAb/Kf3Hu9F/GO4lJuSWzEWHwvQ/kKSUP7pimNgvxkSKj+gUQhHpKKACwrin7rS3byU7IxreF56rl5g==}
 
   emittery@0.13.1:
     resolution: {integrity: sha512-DeWwawk6r5yR9jFgnDKYt4sLS0LmHJJi3ZOnb5/JdbYwj3nW+FxQnHIjhBKz8YLC7oRNPVM9NQ47I3CVx34eqQ==}
@@ -2102,8 +2102,13 @@ packages:
     resolution: {integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==}
     hasBin: true
 
-  semver@7.8.2:
-    resolution: {integrity: sha512-c8jsqUZm3omBOI66G90z1Dyw5z622G8oLG+omfsHBJf3CWQTlOcwOjvOG6wtiNfW6anKm/eA39LMwMtMez2TiQ==}
+  semver@7.8.3:
+    resolution: {integrity: sha512-wnilbGyMxzbY7dNOl7jpKbLSjcfeweJWU5j4+u5qW+6/wuGD9KzIGOyZnQVSBM9E7DtWaaH3CyHkppYrKYoxwg==}
+    engines: {node: '>=10'}
+    hasBin: true
+
+  semver@7.8.4:
+    resolution: {integrity: sha512-rUCObTnP32Q08R2uuIrt7r9PlEonuTmtuXYcW6s5kjdlj3xbnwe+21yXptAUYcMAABLkYYTtnmzb3w3EDZfueA==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -2138,8 +2143,8 @@ packages:
     resolution: {integrity: sha512-WPS/HvHQTYnHisLo9McqBHOJk2FkHO/tlpvldyrnem4aeQp4hai3gythswg6p01oSoTl58rcpiFAjF2br2Ak2A==}
     engines: {node: '>= 0.4'}
 
-  side-channel@1.1.0:
-    resolution: {integrity: sha512-ZX99e6tRweoUXqR+VBrslhda51Nh5MTQwou5tnUDgbtyM0dBgmhEDtWGP/xbKn6hqfPRHujUNwz5fy/wbbhnpw==}
+  side-channel@1.1.1:
+    resolution: {integrity: sha512-6x6dK6zJdpTzF4sQeNYxwtvBzf6Eg4GtlesS94HOvTudUeyK2WXAaIfmDgsyslYrRBeFIlsi54AYsFGUuhmvrQ==}
     engines: {node: '>= 0.4'}
 
   signal-exit@3.0.7:
@@ -2973,7 +2978,7 @@ snapshots:
   '@stylistic/eslint-plugin@5.10.0(eslint@10.4.1)':
     dependencies:
       '@eslint-community/eslint-utils': 4.9.1(eslint@10.4.1)
-      '@typescript-eslint/types': 8.60.1
+      '@typescript-eslint/types': 8.61.0
       eslint: 10.4.1
       eslint-visitor-keys: 4.2.1
       espree: 10.4.0
@@ -3034,7 +3039,7 @@ snapshots:
     dependencies:
       '@types/yargs-parser': 21.0.3
 
-  '@typescript-eslint/types@8.60.1': {}
+  '@typescript-eslint/types@8.61.0': {}
 
   '@ungap/structured-clone@1.3.1': {}
 
@@ -3155,7 +3160,7 @@ snapshots:
 
   asynckit@0.4.0: {}
 
-  automata-cache@https://codeload.github.com/eamanola/automata-cache/tar.gz/6575b6940c80c6f675ede1d431a8473225e1aca9:
+  automata-cache@https://codeload.github.com/eamanola/automata-cache/tar.gz/7c0b5e4d01e03a630022f858c0bf3d348c73c69c:
     dependencies:
       dotenv: 17.4.2
       redis: 5.12.1
@@ -3170,10 +3175,10 @@ snapshots:
     optionalDependencies:
       better-sqlite3: 12.10.0
 
-  automata-user-management@git+https://git@github.com:eamanola/automata-user-management.git#501908a2120d787b97f2d869132ced9359527931(better-sqlite3@12.10.0):
+  automata-user-management@git+https://git@github.com:eamanola/automata-user-management.git#b6dc9f49fb5d75dc3bf3fce4f5be33cb289c67ec(better-sqlite3@12.10.0):
     dependencies:
       automata-db: git+https://git@github.com:eamanola/automata-db.git#458c62fad386d4749230e4b9f8c1b0bffeb658c4(better-sqlite3@12.10.0)
-      automata-utils: git+https://git@github.com:eamanola/automata-utils.git#7fc92b6be5ad76b3ad0d5ad64d3ce8e2ea409f18
+      automata-utils: git+https://git@github.com:eamanola/automata-utils.git#2e6179d246d5145a78232ee03a15a452047c4698
       bcrypt: 6.0.0
       dotenv: 17.4.2
       express: 5.2.1
@@ -3184,7 +3189,7 @@ snapshots:
       - mongodb-memory-server
       - supports-color
 
-  automata-utils@git+https://git@github.com:eamanola/automata-utils.git#7fc92b6be5ad76b3ad0d5ad64d3ce8e2ea409f18:
+  automata-utils@git+https://git@github.com:eamanola/automata-utils.git#2e6179d246d5145a78232ee03a15a452047c4698:
     dependencies:
       dotenv: 17.4.2
       jsonwebtoken: 9.0.3
@@ -3300,7 +3305,7 @@ snapshots:
     dependencies:
       baseline-browser-mapping: 2.10.34
       caniuse-lite: 1.0.30001797
-      electron-to-chromium: 1.5.368
+      electron-to-chromium: 1.5.370
       node-releases: 2.0.47
       update-browserslist-db: 1.2.3(browserslist@4.28.2)
 
@@ -3447,7 +3452,7 @@ snapshots:
 
   ee-first@1.1.1: {}
 
-  electron-to-chromium@1.5.368: {}
+  electron-to-chromium@1.5.370: {}
 
   emittery@0.13.1: {}
 
@@ -3527,14 +3532,14 @@ snapshots:
   eslint-plugin-import-x@4.16.2(eslint@10.4.1):
     dependencies:
       '@package-json/types': 0.0.12
-      '@typescript-eslint/types': 8.60.1
+      '@typescript-eslint/types': 8.61.0
       comment-parser: 1.4.7
       debug: 4.4.3
       eslint: 10.4.1
       eslint-import-context: 0.1.9(unrs-resolver@1.12.2)
       is-glob: 4.0.3
       minimatch: 10.2.5
-      semver: 7.8.2
+      semver: 7.8.3
       stable-hash-x: 0.2.0
       unrs-resolver: 1.12.2
     transitivePeerDependencies:
@@ -3898,7 +3903,7 @@ snapshots:
       '@babel/parser': 7.29.7
       '@istanbuljs/schema': 0.1.6
       istanbul-lib-coverage: 3.2.2
-      semver: 7.8.2
+      semver: 7.8.4
     transitivePeerDependencies:
       - supports-color
 
@@ -4183,7 +4188,7 @@ snapshots:
       jest-message-util: 30.4.1
       jest-util: 30.4.1
       pretty-format: 30.4.1
-      semver: 7.8.2
+      semver: 7.8.4
       synckit: 0.11.13
     transitivePeerDependencies:
       - supports-color
@@ -4268,7 +4273,7 @@ snapshots:
       lodash.isstring: 4.0.1
       lodash.once: 4.1.1
       ms: 2.1.3
-      semver: 7.8.2
+      semver: 7.8.4
 
   jwa@2.0.1:
     dependencies:
@@ -4324,7 +4329,7 @@ snapshots:
 
   make-dir@4.0.0:
     dependencies:
-      semver: 7.8.2
+      semver: 7.8.4
 
   makeerror@1.0.12:
     dependencies:
@@ -4388,7 +4393,7 @@ snapshots:
 
   node-abi@3.92.0:
     dependencies:
-      semver: 7.8.2
+      semver: 7.8.4
 
   node-addon-api@8.8.0: {}
 
@@ -4523,7 +4528,7 @@ snapshots:
 
   qs@6.15.2:
     dependencies:
-      side-channel: 1.1.0
+      side-channel: 1.1.1
 
   range-parser@1.2.1: {}
 
@@ -4588,7 +4593,9 @@ snapshots:
 
   semver@6.3.1: {}
 
-  semver@7.8.2: {}
+  semver@7.8.3: {}
+
+  semver@7.8.4: {}
 
   send@1.2.1:
     dependencies:
@@ -4643,7 +4650,7 @@ snapshots:
       object-inspect: 1.13.4
       side-channel-map: 1.0.1
 
-  side-channel@1.1.0:
+  side-channel@1.1.1:
     dependencies:
       es-errors: 1.3.0
       object-inspect: 1.13.4

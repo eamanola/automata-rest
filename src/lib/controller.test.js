@@ -52,7 +52,7 @@ describe('rest controller', () => {
       }
 
       try {
-        await controller.update(null, { ...resource, baz: 'asd' });
+        await controller.update(null, [{ ...resource, baz: 'asd' }]);
         expect('Unreachable').toBe(true);
       } catch ({ message }) {
         expect(/Owner is required/u.test(message)).toBe(true);
@@ -178,7 +178,7 @@ describe('rest controller', () => {
       const foo = 'text2';
       expect(foo).not.toBe(resource.foo);
 
-      await controller.update(userId, { ...resource, foo });
+      await controller.update(userId, [{ ...resource, foo }]);
 
       const updated = await controller.byId(userId, { id });
 
@@ -192,7 +192,7 @@ describe('rest controller', () => {
       const fakeOwner = 'foo';
       expect(fakeOwner).not.toBe(resource.owner);
 
-      await controller.update(userId, { ...resource, owner: fakeOwner });
+      await controller.update(userId, [{ ...resource, owner: fakeOwner }]);
 
       expect((await controller.byOwner(userId)).length).toBe(1);
       expect((await controller.byOwner({ id: fakeOwner })).length).toBe(0);
@@ -206,7 +206,7 @@ describe('rest controller', () => {
       const modified = 'foo';
       expect(modified).not.toBe(resource.modified);
 
-      await controller.update(userId, { ...resource, modified });
+      await controller.update(userId, [{ ...resource, modified }]);
 
       const updated = await controller.byId(userId, { id });
       expect(updated.modified).not.toBe(modified);
@@ -307,7 +307,7 @@ describe('rest controller', () => {
       const modified = { ...created, foo: 'baz' };
       expect(modified.foo).not.toBe(created.foo);
 
-      await updateUnAuth(created, modified);
+      await updateUnAuth(null, [modified]);
 
       const updated = await byIdUnAuth(null, { id });
       expect(updated.foo).toBe(modified.foo);

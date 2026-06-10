@@ -52,9 +52,11 @@ const restController = (
 
   const byOwner = async (userId) => (await find(addOwner(userId, {})) || []).map(removeOwner);
 
-  const update = async (userId, resource) => {
+  const update = async (userId, resources) => {
     try {
-      await updateOne(addOwner(userId, { id: resource.id }), addOwner(userId, resource));
+      await Promise.all(resources.map(({ id, ...rest }) => (
+        updateOne(addOwner(userId, { id }), addOwner(userId, { ...rest, id }))
+      )));
     } catch (err) {
       if (err.name === 'ValidationError') {
         logger.info(err.message);
