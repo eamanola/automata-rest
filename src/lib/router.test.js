@@ -108,6 +108,20 @@ describe('rest router', () => {
       expect(message).toBe('OK');
       expect(result).toEqual(resource);
     });
+
+    it('should return 404 if not found', async () => {
+      const { token } = await getToken(api);
+
+      const { body, status } = await api
+        .get(`${baseUrl}/non-existing`)
+        .set({ Authorization: `bearer ${token}` });
+
+      expect(status).toBe(404);
+
+      const { message, result } = body;
+      expect(/not found/iu.test(message)).toBe(true);
+      expect(result).toBe(null);
+    });
   });
 
   describe('GET /', () => {

@@ -50,7 +50,17 @@ const restRouter = (controller, {
       const { params, user } = req;
       const result = await byId(user?.id, { id: params.id });
 
-      res.status(200).json({ message: 'OK', [resultKey]: result });
+      let status;
+      let message;
+      if (result === null) {
+        status = 404;
+        message = 'NOT FOUND';
+      } else {
+        status = 200;
+        message = 'OK';
+      }
+
+      res.status(status).json({ message, [resultKey]: result });
     } catch (err) {
       error = err;
     } finally {

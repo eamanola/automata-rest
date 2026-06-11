@@ -129,6 +129,14 @@ describe('rest controller', () => {
 
       expect(result.owner).toBeFalsy();
     });
+
+    it('should return null if not found', async () => {
+      const userId = 'foo';
+
+      const result = await controller.byId(userId, { id: 'not existing' });
+
+      expect(result).toBe(null);
+    });
   });
 
   describe('byOwner', () => {
