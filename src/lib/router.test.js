@@ -6,7 +6,7 @@ const { errors } = require('automata-utils');
 const { getToken } = require('../../jest/test-helpers.test');
 const restRouter = require('./router');
 
-const columns = [{ name: 'foo', required: true, type: 'string' }];
+const columns = [{ name: 'foo', required: true, type: String }];
 
 const table = { columns, name: 'test' };
 

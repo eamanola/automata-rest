@@ -3,7 +3,7 @@ const { string, object } = require('yup');
 const restModel = require('.');
 
 const columns = [
-  { name: 'foo', required: true, type: 'string' },
+  { name: 'foo', required: true, type: String },
 ];
 
 const table = { columns, name: 'test' };
@@ -249,7 +249,7 @@ describe('rest-model', () => {
         'owner',
       ].forEach((reserved) => {
         try {
-          restModel(db, { ...table, columns: [{ name: reserved, type: 'string' }] });
+          restModel(db, { ...table, columns: [{ name: reserved, type: String }] });
           expect('unreachable').toBe(true);
         } catch ({ message }) {
           expect(/reserved/u.test(message)).toBe(true);
@@ -267,12 +267,12 @@ describe('rest-model', () => {
         {
           ...table,
           columns: [
-            { name: 'bool', type: 'bool' },
-            { name: 'date', type: 'date' },
-            { name: 'nullVal', type: 'string' },
-            { name: 'number', type: 'number' },
-            { name: 'object', type: 'object' },
-            { name: 'string', type: 'string' },
+            { name: 'bool', type: Boolean },
+            { name: 'date', type: Date },
+            { name: 'nullVal', type: String },
+            { name: 'number', type: Number },
+            { name: 'object', type: Object },
+            { name: 'string', type: String },
           ],
         },
         { userRequired: false },

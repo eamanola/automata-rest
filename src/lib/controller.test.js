@@ -1,7 +1,7 @@
 const restController = require('./controller');
 const restModel = require('./model');
 
-const columns = [{ name: 'foo', required: true, type: 'string' }];
+const columns = [{ name: 'foo', required: true, type: String }];
 
 const table = { columns, name: 'test' };
 

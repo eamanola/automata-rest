@@ -10,3 +10,21 @@ allowBuilds:
   esbuild: true
 
 blockExoticSubdeps: false
+
+# local
+# overrides:
+#   automata-app: "file:../automata-app"
+#   automata-cache: "file:../automata-cache"
+#   automata-db: "file:../automata-db"
+#   automata-rest: "file:../automata-rest"
+#   automata-user-management: "file:../automata-user-management"
+#   automata-utils: "file:../automata-utils"
+
+# revert
+# overrides:
+#   automata-app: "github:eamanola/automata-app"
+#   automata-cache: "github:eamanola/automata-cache"
+#   automata-db: "github:eamanola/automata-db"
+#   automata-rest: "github:eamanola/automata-rest"
+#   automata-user-management: "github:eamanola/automata-user-management"
+#   automata-utils: "github:eamanola/automata-utils"
