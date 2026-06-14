@@ -17,9 +17,6 @@ importers:
       automata-utils:
         specifier: github:eamanola/automata-utils
         version: https://codeload.github.com/eamanola/automata-utils/tar.gz/ba59cd00e595c520dfc8d5f53343de053f044608
-      dotenv:
-        specifier: ^17.4.2
-        version: 17.4.2
       express:
         specifier: ^5.2.1
         version: 5.2.1

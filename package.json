@@ -1,6 +1,6 @@
 {
   "name": "automata-rest",
-  "version": "0.1.29",
+  "version": "0.1.30",
   "description": "rest api helper",
   "main": "dist/index.bundle.js",
   "type": "commonjs",
@@ -52,7 +52,6 @@
     "automata-cache": "github:eamanola/automata-cache",
     "automata-db": "github:eamanola/automata-db",
     "automata-utils": "github:eamanola/automata-utils",
-    "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "yup": "^1.7.1"
   }
