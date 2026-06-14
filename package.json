@@ -1,6 +1,6 @@
 {
   "name": "automata-rest",
-  "version": "0.1.26",
+  "version": "0.1.27",
   "description": "rest api helper",
   "main": "dist/index.bundle.js",
   "type": "commonjs",
@@ -24,7 +24,7 @@
     "express"
   ],
   "author": "Ehsun Amanolahi",
-  "license": "ISC",
+  "license": "AGPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/eamanola/automata-rest/issues"
   },
