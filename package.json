@@ -1,6 +1,6 @@
 {
   "name": "automata-rest",
-  "version": "0.1.27",
+  "version": "0.1.28",
   "description": "rest api helper",
   "main": "dist/index.bundle.js",
   "type": "commonjs",
@@ -21,9 +21,14 @@
   "keywords": [
     "rest",
     "router",
-    "express"
+    "express",
+    "preconfigured"
   ],
-  "author": "Ehsun Amanolahi",
+  "author": {
+    "name": "Ehsun Amanolahi",
+    "email": "ehsun.amanolahi@gmail.com",
+    "url": "https://codeberg.org/eamanola"
+  },
   "license": "AGPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/eamanola/automata-rest/issues"
