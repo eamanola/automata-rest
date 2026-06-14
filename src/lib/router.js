@@ -7,7 +7,7 @@ const restController = require('./controller');
 const { requireUser } = middlewares;
 
 const restRouter = (controller, {
-  useCache = true,
+  cache = null,
   userRequired = true,
   resultKey = 'result',
   resultsKey = 'results',
@@ -135,7 +135,7 @@ const restRouter = (controller, {
 
   if (userRequired) { router.use(requireUser); }
 
-  if (useCache) { router.use(restCache); }
+  if (cache) { router.use(restCache({ cache })); }
 
   router.post('/', post);
 

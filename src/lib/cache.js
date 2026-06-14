@@ -20,7 +20,7 @@ const onFinish = (req, res, callback) => {
   };
 };
 
-const cacheResult = async (
+const cacheResult = (cache) => async (
   { user, originalUrl }, /* req */
   { statusCode }, /* res */
   body, /* body */
@@ -29,14 +29,14 @@ const cacheResult = async (
     const key = cacheKey({ url: originalUrl, user });
 
     try {
-      await setItem(key, { body, statusCode });
+      await setItem(cache, key, { body, statusCode });
     } catch (err) {
       logger.info(err);
     }
   }
 };
 
-const invalidateCache = async (
+const invalidateCache = (cache) => async (
   { user, originalUrl, baseUrl }, /* req */
   { statusCode }, /* res */
 ) => {
@@ -47,35 +47,35 @@ const invalidateCache = async (
         keys.push(cacheKey({ url: baseUrl, user }));
       }
 
-      await removeItem(keys);
+      await removeItem(cache, keys);
     } catch (err) {
       logger.info(err);
     }
   }
 };
 
-const fromCache = async ({ user, originalUrl }) => { /* req */
+const fromCache = (cache) => async ({ user, originalUrl }) => { /* req */
   const key = cacheKey({ url: originalUrl, user });
-  const cached = await getItem(key);
+  const cached = await getItem(cache, key);
 
   return cached;
 };
 
-const cache = async (req, res, next) => {
+const restCache = ({ cache }) => async (req, res, next) => {
   let error = null;
 
   try {
     const method = req.method.toUpperCase();
 
     if (method === 'GET') {
-      const cached = await fromCache(req);
+      const cached = await fromCache(cache)(req);
 
       if (cached) {
         res.status(cached.statusCode).json(cached.body);
 
         logger.info('from cache');
       } else {
-        onFinish(req, res, cacheResult);
+        onFinish(req, res, cacheResult(cache));
       }
     } else if (
       [
@@ -83,7 +83,7 @@ const cache = async (req, res, next) => {
         'PUT',
         'DELETE',
       ].includes(method)) {
-      onFinish(req, res, invalidateCache);
+      onFinish(req, res, invalidateCache(cache));
     }
   } catch (err) {
     error = err;
@@ -92,7 +92,7 @@ const cache = async (req, res, next) => {
   next(error);
 };
 
-module.exports = cache;
+module.exports = restCache;
 
 if (NODE_ENV === 'test') {
   module.exports.cacheKey = cacheKey;
