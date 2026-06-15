@@ -1,4 +1,3 @@
-const { getItem, setItem, removeItem } = require('automata-cache');
 const { utils } = require('automata-utils');
 
 const { NODE_ENV } = require('../config');
@@ -29,7 +28,7 @@ const cacheResult = (cache) => async (
     const key = cacheKey({ url: originalUrl, user });
 
     try {
-      await setItem(cache, key, { body, statusCode });
+      await cache.setItem(key, { body, statusCode });
     } catch (err) {
       logger.info(err);
     }
@@ -47,7 +46,7 @@ const invalidateCache = (cache) => async (
         keys.push(cacheKey({ url: baseUrl, user }));
       }
 
-      await removeItem(cache, keys);
+      await cache.removeItem(keys);
     } catch (err) {
       logger.info(err);
     }
@@ -56,7 +55,7 @@ const invalidateCache = (cache) => async (
 
 const fromCache = (cache) => async ({ user, originalUrl }) => { /* req */
   const key = cacheKey({ url: originalUrl, user });
-  const cached = await getItem(cache, key);
+  const cached = await cache.getItem(key);
 
   return cached;
 };
