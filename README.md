@@ -1,3 +1,5 @@
+Moved to [codeberg](https://codeberg.org/eamanola/automata-rest)
+
 # automata-rest
 
 A precongured express router for REST development
